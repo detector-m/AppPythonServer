@@ -3,5 +3,9 @@
 		{
 			"path": "."
 		}
-	]
+	],
+	"settings": {
+		"explorer.sortOrder": "filesFirst",
+		"editor.wordWrap": "bounded"
+	}
 }
