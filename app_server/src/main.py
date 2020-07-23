@@ -35,6 +35,10 @@ def create_app() -> Flask:
     # if app.config['ENV'] == 'development':
     #     print(app.url_map)
 
+    @app.route('/')
+    def index():
+        return 'hello'
+
     return app
 
 def load_config(app):

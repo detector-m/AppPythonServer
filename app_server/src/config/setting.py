@@ -13,7 +13,6 @@
 ENV = 'development'
 DEBUG = True
 SECRET_KEY = 'AppPythonServer'
-FLASK_DEBUG = True
 
 # 在浏览器请求接口正常显示中文，而不是字节码
 JSON_AS_ASCII = False

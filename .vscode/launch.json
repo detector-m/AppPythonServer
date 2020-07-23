@@ -5,15 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: 当前文件",
+            // "name": "Python: 当前文件",
+            "name": "Python: Flask",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            // "program": "${file}",
             "console": "integratedTerminal",
+            "module": "flask",
             "env": {
-                "FLASK_APP": "${file}",       //你的启动py
-                "FLASK_RUN_HOST": "0.0.0.0",                        //本机IP
-                "FLASK_RUN_PORT": "5000",                            //端口号
+                // "FLASK_APP": "${file}",       //你的启动py
+                "FLASK_APP": "${workspaceFolder}/app_server/src/main.py",       //你的启动py
+                // "FLASK_RUN_HOST": "127.0.0.1",                        //本机IP
+                // "FLASK_RUN_PORT": "5000",                            //端口号
                 "FLASK_ENV": "development",
                 "FLASK_DEBUG": "0",                                  //开启debug模式
             },
