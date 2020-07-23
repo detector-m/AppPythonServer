@@ -11,12 +11,29 @@
 __author__ = 'Riven'
 
 
-from flask import request, json
+from flask import request, json, Flask
 from werkzeug.exceptions import HTTPException
 
 import sys
 sys.path.append('.')
 from app_server.src.core.core_helper import jsonify
+
+def handle_error(app: Flask):
+    @app.errorhandler(Exception)
+    def _handle_error(e):
+        if isinstance(e, APIException):
+            return e
+        elif isinstance(e, HTTPException):
+            return APIException(code=e.code, error_code=1007, msg=e.description)
+        # 暂未加入数据库功能
+        # elif isinstance(e, IntegrityError) and 'Duplicate entry' in e.orig.errmsg:
+        #     return RepeatException(msg='数据的unique字段重复')
+        else:
+            if not app.config['DEBUG']:
+                # 未知错误(统一为服务端异常)
+                return ServerError()
+            else:
+                raise e
 
 class APIException(HTTPException):
     code = 500 # http 状态码

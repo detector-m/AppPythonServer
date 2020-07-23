@@ -10,12 +10,21 @@
 
 from flask import Flask
 
-def create_app() -> Flask:
-    app = Flask(__name__)
-    # app.config.from_object(Config)
+import sys
+sys.path.append('.')
+from app_server.src.config import setting
+from app_server.src.core import error
 
-    # import error
+def create_app() -> Flask:
+    app = Flask(__name__, static_folder="../static", template_folder="../templates")
+
+    # 配置
+    # app.config.from_object(setting)
+    load_config(app)
+
+    # 错误处理
     # error.init_error(app)
+    error.handle_error(app)
 
     # import log
     # log.init_log(app)
@@ -23,12 +32,13 @@ def create_app() -> Flask:
     # import routes
     # routes.init_routes(app)
 
-    if app.config['ENV'] == 'development':
-        print(app.url_map)
+    # if app.config['ENV'] == 'development':
+    #     print(app.url_map)
 
     return app
 
-# app = create_app()
+def load_config(app):
+    app.config.from_object(setting)
 
 def main():
     app = create_app()
