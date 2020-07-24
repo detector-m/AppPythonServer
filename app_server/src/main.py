@@ -15,6 +15,7 @@ sys.path.append('.')
 from app_server.src.config import setting
 from app_server.src.error import error
 from app_server.src.log import log
+from app_server.src.routes import routes
 
 def create_app() -> Flask:
     app = Flask(__name__, static_folder="../static", template_folder="../templates")
@@ -32,15 +33,15 @@ def create_app() -> Flask:
     # app.logger.error('error')
     # log.LOGGER.warn('-----sef')
     
-    # import routes
-    # routes.init_routes(app)
+    # 路由处理
+    routes.init_routes(app)
 
     # if app.config['ENV'] == 'development':
     #     print(app.url_map)
 
-    @app.route('/')
-    def index():
-        return 'hello'
+    # @app.route('/')
+    # def index():
+    #     return 'hello'
 
     return app
 
