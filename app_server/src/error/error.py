@@ -18,6 +18,26 @@ import sys
 sys.path.append('.')
 from app_server.src.core.core_helper import jsonify
 
+# 
+# from _response import response
+
+# def init_error(app: Flask):
+#     @app.errorhandler(400)
+#     def _error_400(e):
+#         return response(400)
+    
+#     @app.errorhandler(404)
+#     def _error_404(e):
+#         return response(404)
+    
+#     @app.errorhandler(405)
+#     def _error_405(e):
+#         return response(405)
+
+#     @app.errorhandler(500)
+#     def _error_500(e):
+#         return response(500)
+
 def handle_error(app: Flask):
     @app.errorhandler(Exception)
     def _handle_error(e):

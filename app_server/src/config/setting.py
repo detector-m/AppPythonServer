@@ -11,7 +11,6 @@
 # import os
 
 ENV = 'development'
-DEBUG = True
 SECRET_KEY = 'AppPythonServer'
 
 # 在浏览器请求接口正常显示中文，而不是字节码

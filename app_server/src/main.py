@@ -13,7 +13,8 @@ from flask import Flask
 import sys
 sys.path.append('.')
 from app_server.src.config import setting
-from app_server.src.core import error
+from app_server.src.error import error
+from app_server.src.log import log
 
 def create_app() -> Flask:
     app = Flask(__name__, static_folder="../static", template_folder="../templates")
@@ -26,9 +27,11 @@ def create_app() -> Flask:
     # error.init_error(app)
     error.handle_error(app)
 
-    # import log
-    # log.init_log(app)
-
+    # 日志处理
+    log.init_log(app)
+    # app.logger.error('error')
+    # log.LOGGER.warn('-----sef')
+    
     # import routes
     # routes.init_routes(app)
 
@@ -46,11 +49,6 @@ def load_config(app):
 
 def main():
     app = create_app()
-    
-    @app.route('/')
-    def index():
-        return 'hello'
-
     app.run()
 
 if __name__ == '__main__':
