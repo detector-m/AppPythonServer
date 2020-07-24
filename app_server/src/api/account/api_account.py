@@ -9,7 +9,7 @@
 '''
 
 
-from flask import Blueprint
+from flask import Blueprint, request
 
 api_account_module = Blueprint('api_account_module', __name__)
 
@@ -17,6 +17,17 @@ api_account_module = Blueprint('api_account_module', __name__)
 def login():
     return '用户登录'
 
-@api_account_module.route('/register')
+@api_account_module.route('/register', methods=['POST', 'GET'])
 def register():
+    # if (request.method == 'POST'):
+    #     req_form_dict = request.form.to_dict()
+    # else:
+    #     req_args_dict = request.args.to_dict()
+
+    req_args_dict = request.args.to_dict()
+    req_form_dict = request.form.to_dict()
+
+    print(req_args_dict)
+    print(req_form_dict)
+
     return '用户注册'
