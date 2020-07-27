@@ -11,7 +11,7 @@ import plistlib
 
 def read_content(path) -> dict:
     if not path:
-        return None
+        return {}
 
     with open(path, 'rb') as fp:
         try:
@@ -19,7 +19,8 @@ def read_content(path) -> dict:
         # except:
             # print(sys.exc_info())
         except plistlib.InvalidFileException as e:
-            return None
+            print(e)
+            ret_dict = {}
     
     return ret_dict
 
