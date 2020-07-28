@@ -5,18 +5,8 @@
 	<key>accounts</key>
 	<array>
 		<dict>
-			<key>name</key>
-			<string>15012341234</string>
 			<key>password</key>
-			<string>123456</string>
-			<key>phone</key>
-			<string>15012341234</string>
-		</dict>
-		<dict>
-			<key>name</key>
-			<string>15012341234</string>
-			<key>password</key>
-			<string>123456</string>
+			<string>12345678</string>
 			<key>phone</key>
 			<string>15012341234</string>
 		</dict>

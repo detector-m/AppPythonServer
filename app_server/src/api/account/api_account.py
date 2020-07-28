@@ -11,23 +11,52 @@
 
 from flask import Blueprint, request
 
+import sys
+sys.path.append('.')
+from app_server.src.data import account_manager
+from app_server.src.error import error
+
 api_account_module = Blueprint('api_account_module', __name__)
 
-@api_account_module.route('/login')
+@api_account_module.route('/login', methods=['POST'])
 def login():
-    return '用户登录'
+    req_form_dict = request.form.to_dict()
+    if not req_form_dict:
+        return error.ParameterException()
 
-@api_account_module.route('/register', methods=['POST', 'GET'])
+    account = {}
+    account['phone'] = req_form_dict['phone']
+    account['password'] = req_form_dict['password']
+
+    a_manager = account_manager.AccountManager()
+    if not a_manager.exist_account(account):
+        return error.NotFound(msg='用户不存在')
+
+    return error.Success(msg='登录成功')
+
+# @api_account_module.route('/register', methods=['POST', 'GET'])
+@api_account_module.route('/register', methods=['POST'])
 def register():
     # if (request.method == 'POST'):
     #     req_form_dict = request.form.to_dict()
     # else:
     #     req_args_dict = request.args.to_dict()
 
-    req_args_dict = request.args.to_dict()
     req_form_dict = request.form.to_dict()
+    if not req_form_dict:
+        return error.ParameterException()
+    
+    try:
+        account = {}
+        account['phone'] = req_form_dict['phone']
+        account['password'] = req_form_dict['password']
+    except KeyError as e:
+        return error.ParameterException()
 
-    print(req_args_dict)
-    print(req_form_dict)
+    a_manager = account_manager.AccountManager()
+    if a_manager.exist_account(account):
+        return error.RepeatException(msg='已注册')
 
-    return '用户注册'
+    a_manager.add_account(account)
+
+    return error.Success(error_code=1, msg='注册成功')
