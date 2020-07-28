@@ -6,6 +6,9 @@
 	],
 	"settings": {
 		"explorer.sortOrder": "filesFirst",
-		"editor.wordWrap": "bounded"
+		"editor.wordWrap": "bounded",
+		"files.exclude": {
+			"**/__pycache__": true
+		}
 	}
 }
