@@ -25,6 +25,26 @@ class AccountManager(object):
         self.accounts_dict = self._get_accounts_dict()
         self.accounts = self.get_accounts()
 
+    def get_account_with_phone(self, phone: str) -> dict:
+        if not phone:
+            return None
+
+        for e_a in self.accounts:
+            if e_a['phone'] == phone:
+                return e_a
+            
+        return None
+
+    def exist_account_with_phoen(self, phone: str) -> bool:
+        if not phone:
+            return False
+        
+        for e_a in self.accounts:
+            if e_a['phone'] == phone:
+                return True
+            
+        return False
+
     def exist_account(self, a: dict) -> bool:
         for e_account in self.accounts:
             if (e_account['phone'] == a['phone']):

@@ -24,15 +24,24 @@ def login():
     if not req_form_dict:
         return error.ParameterException()
 
-    account = {}
-    account['phone'] = req_form_dict['phone']
-    account['password'] = req_form_dict['password']
+    try:
+        account = {}
+        account['phone'] = req_form_dict['phone']
+        account['password'] = req_form_dict['password']
+    except KeyError as e:
+        return error.ParameterException()
 
     a_manager = account_manager.AccountManager()
     if not a_manager.exist_account(account):
         return error.NotFound(msg='用户不存在')
+    
+    exist_account = a_manager.get_account_with_phone(account['phone'])
+    if account['password'] != exist_account['password']:
+        return error.Failed(msg='账号/密码错误')
 
-    return error.Success(msg='登录成功')
+    res_dict = {'token': '12343212343234323445323'}
+
+    return error.Success(msg='登录成功', data=res_dict)
 
 # @api_account_module.route('/register', methods=['POST', 'GET'])
 @api_account_module.route('/register', methods=['POST'])
