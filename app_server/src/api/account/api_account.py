@@ -15,6 +15,7 @@ import sys
 sys.path.append('.')
 from app_server.src.data import account_manager
 from app_server.src.error import error
+from app_server.src.utils import token_utils
 
 api_account_module = Blueprint('api_account_module', __name__)
 
@@ -39,7 +40,11 @@ def login():
     if account['password'] != exist_account['password']:
         return error.Failed(msg='账号/密码错误')
 
-    res_dict = {'token': '12343212343234323445323'}
+    token = token_utils.generate_token('com.AppPythonServer')
+    res_dict = {'token': token}
+    exist_account['token'] = token
+
+    a_manager.set_accounts(a_manager.accounts)
 
     return error.Success(msg='登录成功', data=res_dict)
 
