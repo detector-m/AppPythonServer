@@ -18,10 +18,12 @@
                 // "FLASK_APP": "${file}",
                 //你的启动py
                 "FLASK_APP": "${workspaceFolder}/app_server/src/main.py",
-                //本机IP
+                // 服务ip
                 // "FLASK_RUN_HOST": "127.0.0.1",
+                //本机IP
+                "FLASK_RUN_HOST": "0.0.0.0",
                 //端口号
-                // "FLASK_RUN_PORT": "5000",
+                "FLASK_RUN_PORT": "5000",
                 "FLASK_ENV": "development",
                 //开启debug模式
                 "FLASK_DEBUG": "1",
