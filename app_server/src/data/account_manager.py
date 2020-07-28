@@ -35,7 +35,7 @@ class AccountManager(object):
             
         return None
 
-    def exist_account_with_phoen(self, phone: str) -> bool:
+    def exist_account_with_phone(self, phone: str) -> bool:
         if not phone:
             return False
         
