@@ -15,21 +15,38 @@ from app_server.src.data.data_interface import DataInterface
 from app_server.src.data.data_adapter import DataAdapter
 
 class AccountDataInterface(DataInterface):
-    def save(self, data, path):
-        print(type(AccountDataInterface))
-        # print('DataM1, save' + DataInterface.path)
-        print('DataM1, save')
-        print(self.__class__.__name__ + ' ' + self.save.__class__.__name__)
-        print(type(self.save))
-
-    def fetch(self, path):
-        print('DataM1, fetch')
-
-class DataM1(AccountDataInterface):
+    # def test(self):
+    #     print(type(AccountDataInterface))
+    #     print('DataM1, save')
+    #     print(self.__class__.__name__ + ' ' + self.test.__class__.__name__)
+    #     print(type(self.test))
     pass
+        
+class DataM1(AccountDataInterface):
+    def save(self, data, path):
+        print(self.__class__.__name__ + ' ' + self.save.__name__)
+
+        if not path or not data:
+            return None
+                
+    def fetch(self, path):
+        print(self.__class__.__name__ + ' ' + self.fetch.__name__)
+
+        if not path:
+            return None
 
 class DataM2(AccountDataInterface):
-    pass
+    def save(self, data, path):
+        print(self.__class__.__name__ + ' ' + self.save.__name__)
+
+        if not path or not data:
+            return None
+                
+    def fetch(self, path):
+        print(self.__class__.__name__ + ' ' + self.fetch.__name__)
+
+        if not path:
+            return None
 
 class AccountManager(DataAdapter):
     def __init__(self, data_interface: DataInterface, *, path=None):
