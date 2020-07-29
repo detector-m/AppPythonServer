@@ -13,7 +13,7 @@ from flask import Blueprint, request
 
 import sys
 sys.path.append('.')
-from app_server.src.data import account_manager
+from app_server.src.data import account_plist_manager
 from app_server.src.error import error
 from app_server.src.utils import token_utils
 
@@ -32,7 +32,7 @@ def login():
     except KeyError as e:
         return error.ParameterException()
 
-    a_manager = account_manager.AccountManager()
+    a_manager = account_plist_manager.AccountPlistManager()
     if not a_manager.exist_account(account):
         return error.NotFound(msg='用户不存在')
     
@@ -67,7 +67,7 @@ def register():
     except KeyError as e:
         return error.ParameterException()
 
-    a_manager = account_manager.AccountManager()
+    a_manager = account_plist_manager.AccountPlistManager()
     if a_manager.exist_account(account):
         return error.RepeatException(msg='已注册')
 
