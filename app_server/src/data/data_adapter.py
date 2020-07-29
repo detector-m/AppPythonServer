@@ -13,18 +13,30 @@ sys.path.append('.')
 from app_server.src.data.data_interface import DataInterface
 
 class DataM1(DataInterface):
-    def save(self, data):
-        print('DataM1, save')
+    def save(self, save_data, path=None):
+        print(self.__class__.__name__ + ' ' + self.save.__name__)
 
-    def fetch(self):
-        print('DataM1, fetch')
+        if not path or not save_data:
+            return None
+                
+    def fetch(self, fetch_data=None, path=None):
+        print(self.__class__.__name__ + ' ' + self.fetch.__name__)
+
+        if not path:
+            return None
 
 class DataM2(DataInterface):
-    def save(self, data):
-        print('DataM2, save')
+    def save(self, save_data, path=None):
+        print(self.__class__.__name__ + ' ' + self.save.__name__)
 
-    def fetch(self):
-        print('DataM2, fetch')
+        if not path or not save_data:
+            return None
+                
+    def fetch(self, fetch_data=None, path=None):
+        print(self.__class__.__name__ + ' ' + self.fetch.__name__)
+
+        if not path:
+            return None
 
 class DataAdapter(object):
     def __init__(self, data_interface: DataInterface, *, adapted_methods=None):

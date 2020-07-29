@@ -20,11 +20,11 @@ class DataInterface(metaclass=abc.ABCMeta):
         # self.path = '123'
 
     @abc.abstractclassmethod
-    def save(self, data, path):
+    def save(self, save_data, path=None):
         # raise NotImplementedError
         pass
 
     @abc.abstractclassmethod
-    def fetch(self, path):
+    def fetch(self, fetch_data=None, path=None):
         # raise NotImplementedError
         pass
