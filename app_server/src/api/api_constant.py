@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 '''
-@文件        :constant.py
+@文件        :api_constant.py
 @说明        :
 @时间        :2020/07/24 15:32:22
 @作者        :Riven

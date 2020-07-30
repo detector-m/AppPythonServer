@@ -13,7 +13,7 @@ from flask import Flask
 import sys
 sys.path.append('.')
 from app_server.src.api.account.api_account import api_account_module
-from app_server.src.api.constant import API_ROOT_PATH, API_ACCOUNT_ROOT_PATH
+from app_server.src.api.api_constant import API_ROOT_PATH, API_ACCOUNT_ROOT_PATH
 from app_server.src.error import error
 
 
