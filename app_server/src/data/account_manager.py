@@ -66,6 +66,9 @@ class AccountDataDB(AccountDataInterface):
         self.cur.close()
         self.con.close()
 
+        self.cur = None
+        self.con = None
+
     '''
     插入数据
     '''
@@ -94,7 +97,48 @@ class AccountDataDB(AccountDataInterface):
             self.close()
             return 0
 
-    
+    '''
+    更新数据
+    '''
+    def update(self, **kwargs) -> int:
+        if not self.con:
+            return -1;
+
+        if not kwargs:
+            return -1;
+
+        try:
+            sql_str = f"UPDATE {ACCOUNT_DB_TABLE_NAME} SET "
+            key_str =''
+            for key, value in kwargs.items():
+                if key == ACCOUNT_DB_TABLE_KEYS[0]:
+                    continue
+                
+                # if not value:
+                #     value = "''"
+                    # continue
+                # key_str += f"'{str(key)}'" + "=" + f"'{str(value)}'" + ", "
+                key_str += str(key) + "=" + f"'{str(value)}'" + ", "
+
+
+            if not key_str:
+                return 0
+            
+            key_str = key_str[:-2]
+            key_str += f" WHERE {ACCOUNT_DB_TABLE_KEYS[0]}='{kwargs[ACCOUNT_DB_TABLE_KEYS[0]]}'"
+
+            sql_str = sql_str + key_str
+            print(sql_str)
+
+            self.cur.execute(sql_str)
+            self.con.commit()
+            return 1
+        except Exception as e:
+            print(e)
+            self.close()
+            return 0
+        
+
     '''
     获取数据
     '''
@@ -124,6 +168,9 @@ class AccountDataDB(AccountDataInterface):
                 account_list.append(item)
 
             return account_list
+
+    def fetch_all(self):
+        return self.fetch()
 
 
 class AccountManager(DataAdapter):
@@ -157,5 +204,18 @@ if __name__ == '__main__':
     if not exits_list:
         account_db_manager.insert(**save_data)
 
-    account_list = account_db_manager.fetch(**{'phone': '15012340000'})
+    # account_list = account_db_manager.fetch(**{'phone': '15012340000'})
+    # print(account_list)
+
+    account_list = account_db_manager.fetch_all()
+    print(account_list)
+
+    save_data = {'phone': '15012340001', 'password': '000002', 'name': 'Jobs2', 'token': ''} 
+    fetch_dic = {'phone': save_data['phone']}
+    # print(fetch_dic)
+    exits_list = account_db_manager.fetch(**fetch_dic)   
+    if exits_list:
+        account_db_manager.update(**save_data)
+    
+    account_list = account_db_manager.fetch_all()
     print(account_list)
