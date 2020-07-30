@@ -76,6 +76,13 @@ class AccountDataDB(AccountDataInterface):
         if not kwargs:
             return -1;
 
+        # fetch_dic = dict([(ACCOUNT_DB_TABLE_KEYS[0], kwargs[ACCOUNT_DB_TABLE_KEYS[0]])]);
+        # fetch_dic = {ACCOUNT_DB_TABLE_KEYS[0]: kwargs[ACCOUNT_DB_TABLE_KEYS[0]]}
+        # print(fetch_dic)
+        # exits_list = self.fetch(**fetch_dic)
+        # if exits_list:
+        #     return 0
+
         try:
             sql_str = f"INSERT INTO {ACCOUNT_DB_TABLE_NAME} ({ACCOUNT_DB_TABLE_KEYS[0]}, {ACCOUNT_DB_TABLE_KEYS[1]}, {ACCOUNT_DB_TABLE_KEYS[2]}, {ACCOUNT_DB_TABLE_KEYS[3]}) \
             VALUES ('{kwargs[ACCOUNT_DB_TABLE_KEYS[0]]}', '{kwargs[ACCOUNT_DB_TABLE_KEYS[1]]}', '{kwargs[ACCOUNT_DB_TABLE_KEYS[2]]}', '{kwargs[ACCOUNT_DB_TABLE_KEYS[3]]}')"
@@ -105,7 +112,7 @@ class AccountDataDB(AccountDataInterface):
             return account_list
         else:
             keys = list(kwargs.keys())
-            print(keys)
+            # print(keys)
             key = keys[0]
             if key not in ACCOUNT_DB_TABLE_KEYS:
                 return None
@@ -168,14 +175,24 @@ class AccountManager(DataAdapter):
     
 
 if __name__ == '__main__':
-    save_data = {'phone': '15012340000', 'password': '000000', 'name': 'Riven', 'token': ''}
     account_db_handler = AccountDataDB()
     account_db_manager = AccountManager(account_db_handler)
     account_db_manager.connect()
-    account_db_manager.insert(**save_data)
 
-    save_data = {'phone': '15012340001', 'password': '000001', 'name': 'Jobs', 'token': ''}
-    account_db_manager.insert(**save_data)
+    save_data = {'phone': '15012340000', 'password': '000000', 'name': 'Riven', 'token': ''}
+    # fetch_dic = dict([(ACCOUNT_DB_TABLE_KEYS[0], kwargs[ACCOUNT_DB_TABLE_KEYS[0]])]);
+    fetch_dic = {'phone': save_data['phone']}
+    print(fetch_dic)
+    exits_list = account_db_manager.fetch(**fetch_dic)
+    if not exits_list:
+        account_db_manager.insert(**save_data)
+
+    save_data = {'phone': '15012340001', 'password': '000001', 'name': 'Jobs', 'token': ''} 
+    fetch_dic = {'phone': save_data['phone']}
+    print(fetch_dic)
+    exits_list = account_db_manager.fetch(**fetch_dic)   
+    if not exits_list:
+        account_db_manager.insert(**save_data)
 
     account_list = account_db_manager.fetch(**{'phone': '15012340000'})
     print(account_list)
