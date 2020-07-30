@@ -124,43 +124,6 @@ class AccountDataDB(AccountDataInterface):
                 account_list.append(item)
 
             return account_list
-    
-
-    # def save(self, save_data, path=None):
-    #     print(self.__class__.__name__ + ' ' + self.save.__name__)
-
-    #     if not path or not save_data:
-    #         return None
-
-    #     cur_con, cur_cur = self._connect(path)
-
-    #     # cur_cur.execute(f"INSERT INTO {ACCOUNT_DB_TABLE_NAME} (phone,password,name,token) \
-    # #   VALUES ({save_data['phone']}, {save_data['password']}, {save_data['name']}, {save_data['token']})")
-    #     cur_cur.execute(f"INSERT INTO {ACCOUNT_DB_TABLE_NAME} (phone,password,name,token) \
-    #   VALUES ('{save_data['phone']}', '{save_data['password']}', '{save_data['name']}', '{save_data['token']}')")
-
-    #     # cur_cur.execute("INSERT INTO account_table (phone,password,name,token) \
-    # #   VALUES ('15012341234', '12345678', 'Paul', '123456789-098765432')")
-    #     cur_con.commit()
-
-    #     cur_cur.close()
-    #     cur_con.close()
-                
-    # def fetch(self, fetch_data=None, path=None):
-    #     print(self.__class__.__name__ + ' ' + self.fetch.__name__)
-
-    #     if not path:
-    #         return None
-
-    #     cur_con, cur_cur = self._connect(path)
-
-    #     if not fetch_data:
-    #         cur_cur.execute("select * from account_table")
-    #         for item in cur_cur:
-    #             print(item)
-        
-    #     cur_cur.close()
-    #     cur_con.close()
 
 
 class AccountManager(DataAdapter):
@@ -182,23 +145,17 @@ if __name__ == '__main__':
     save_data = {'phone': '15012340000', 'password': '000000', 'name': 'Riven', 'token': ''}
     # fetch_dic = dict([(ACCOUNT_DB_TABLE_KEYS[0], kwargs[ACCOUNT_DB_TABLE_KEYS[0]])]);
     fetch_dic = {'phone': save_data['phone']}
-    print(fetch_dic)
+    # print(fetch_dic)
     exits_list = account_db_manager.fetch(**fetch_dic)
     if not exits_list:
         account_db_manager.insert(**save_data)
 
     save_data = {'phone': '15012340001', 'password': '000001', 'name': 'Jobs', 'token': ''} 
     fetch_dic = {'phone': save_data['phone']}
-    print(fetch_dic)
+    # print(fetch_dic)
     exits_list = account_db_manager.fetch(**fetch_dic)   
     if not exits_list:
         account_db_manager.insert(**save_data)
 
     account_list = account_db_manager.fetch(**{'phone': '15012340000'})
     print(account_list)
-
-    # print(account_db_handler.path)
-
-    # db_handler.save({'phone': '15012340000', 'password': '000000', 'name': 'Riven', 'token': '123456',}, db_handler.path)
-    # db_handler.fetch(path=db_handler.path)
-    # db_handler.save({}, 'a')
