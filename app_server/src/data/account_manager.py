@@ -89,8 +89,11 @@ class AccountDataDB(AccountDataInterface):
         try:
             sql_str = f"INSERT INTO {ACCOUNT_DB_TABLE_NAME} ({ACCOUNT_DB_TABLE_KEYS[0]}, {ACCOUNT_DB_TABLE_KEYS[1]}, {ACCOUNT_DB_TABLE_KEYS[2]}, {ACCOUNT_DB_TABLE_KEYS[3]}) \
             VALUES ('{kwargs[ACCOUNT_DB_TABLE_KEYS[0]]}', '{kwargs[ACCOUNT_DB_TABLE_KEYS[1]]}', '{kwargs[ACCOUNT_DB_TABLE_KEYS[2]]}', '{kwargs[ACCOUNT_DB_TABLE_KEYS[3]]}')"
+            print(sql_str)
+
             self.cur.execute(sql_str)
             self.con.commit()
+
             return 1
         except Exception as e:
             print(e)
@@ -108,30 +111,48 @@ class AccountDataDB(AccountDataInterface):
             return -1;
 
         try:
-            sql_str = f"UPDATE {ACCOUNT_DB_TABLE_NAME} SET "
-            key_str =''
-            for key, value in kwargs.items():
-                if key == ACCOUNT_DB_TABLE_KEYS[0]:
-                    continue
+            # sql_str = f"UPDATE {ACCOUNT_DB_TABLE_NAME} SET "
+            # key_str =''
+            # for key, value in kwargs.items():
+            #     if key == ACCOUNT_DB_TABLE_KEYS[0]:
+            #         continue
                 
-                # if not value:
-                #     value = "''"
-                    # continue
-                # key_str += f"'{str(key)}'" + "=" + f"'{str(value)}'" + ", "
-                key_str += str(key) + "=" + f"'{str(value)}'" + ", "
+            #     # if not value:
+            #     #     value = "''"
+            #         # continue
+            #     # key_str += f"'{str(key)}'" + "=" + f"'{str(value)}'" + ", "
+            #     key_str += str(key) + "=" + f"'{str(value)}'" + ", "
 
 
-            if not key_str:
-                return 0
+            # if not key_str:
+            #     return 0
             
-            key_str = key_str[:-2]
-            key_str += f" WHERE {ACCOUNT_DB_TABLE_KEYS[0]}='{kwargs[ACCOUNT_DB_TABLE_KEYS[0]]}'"
+            # key_str = key_str[:-2]
+            # key_str += f" WHERE {ACCOUNT_DB_TABLE_KEYS[0]}='{kwargs[ACCOUNT_DB_TABLE_KEYS[0]]}'"
 
-            sql_str = sql_str + key_str
+            # sql_str = sql_str + key_str
+            # print(sql_str)
+
+            # self.cur.execute(sql_str)
+
+            # ？占位符方式
+            sql_str = f"UPDATE {ACCOUNT_DB_TABLE_NAME} SET "
+            keys = list(kwargs.keys())
+            values = list(kwargs.values())
+
+            # keys.remove(ACCOUNT_DB_TABLE_KEYS[0])
+            # values.remove(kwargs[ACCOUNT_DB_TABLE_KEYS[0]])
+
+            keys_str = "=?, ".join(keys)
+            keys_str += "=? "
+            keys_str += f"WHERE {ACCOUNT_DB_TABLE_KEYS[0]}=?"
+            values.append(kwargs[ACCOUNT_DB_TABLE_KEYS[0]])
+            sql_str += keys_str
             print(sql_str)
 
-            self.cur.execute(sql_str)
+            self.cur.execute(sql_str, tuple(values))
             self.con.commit()
+
             return 1
         except Exception as e:
             print(e)
@@ -210,7 +231,7 @@ if __name__ == '__main__':
     account_list = account_db_manager.fetch_all()
     print(account_list)
 
-    save_data = {'phone': '15012340001', 'password': '000002', 'name': 'Jobs2', 'token': ''} 
+    save_data = {'phone': '15012340001', 'password': '444444', 'name': 'Jobs444444', 'token': ''} 
     fetch_dic = {'phone': save_data['phone']}
     # print(fetch_dic)
     exits_list = account_db_manager.fetch(**fetch_dic)   
