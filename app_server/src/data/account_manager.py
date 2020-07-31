@@ -158,7 +158,49 @@ class AccountDataDB(AccountDataInterface):
             print(e)
             self.close()
             return 0
+
+    '''
+    删除
+    '''
+    def delete(self, **kwargs):
+        if not self.con:
+            return -1;
         
+        if not kwargs:
+            return -1
+
+        keys = list(kwargs.keys())
+        # print(keys)
+        key = keys[0]
+        if key not in ACCOUNT_DB_TABLE_KEYS:
+            return -1
+        
+        account_list = []
+        # sql_str = f"DELETE * FROM {ACCOUNT_DB_TABLE_NAME} WHERE {key}='{kwargs[key]}'"
+        # self.cur.execute(sql_str)
+
+        sql_str = f"DELETE FROM {ACCOUNT_DB_TABLE_NAME} WHERE {key}=?"
+        print(sql_str)
+        self.cur.execute(sql_str, (kwargs[key], ))
+        self.con.commit()
+
+        return 1
+
+
+    '''
+    根据电话号码判读是否存在
+    '''   
+    def exist(self, phone):
+        if not phone:
+            return False
+        
+        exist_list = self.fetch(**{ACCOUNT_DB_TABLE_KEYS[0]: phone})
+        if not exist_list:
+            return False
+
+        return True
+
+
 
     '''
     获取数据
@@ -214,15 +256,15 @@ if __name__ == '__main__':
     # fetch_dic = dict([(ACCOUNT_DB_TABLE_KEYS[0], kwargs[ACCOUNT_DB_TABLE_KEYS[0]])]);
     fetch_dic = {'phone': save_data['phone']}
     # print(fetch_dic)
-    exits_list = account_db_manager.fetch(**fetch_dic)
-    if not exits_list:
+    exist_list = account_db_manager.fetch(**fetch_dic)
+    if not exist_list:
         account_db_manager.insert(**save_data)
 
     save_data = {'phone': '15012340001', 'password': '000001', 'name': 'Jobs', 'token': ''} 
     fetch_dic = {'phone': save_data['phone']}
     # print(fetch_dic)
-    exits_list = account_db_manager.fetch(**fetch_dic)   
-    if not exits_list:
+    exist_list = account_db_manager.fetch(**fetch_dic)   
+    if not exist_list:
         account_db_manager.insert(**save_data)
 
     # account_list = account_db_manager.fetch(**{'phone': '15012340000'})
@@ -231,12 +273,18 @@ if __name__ == '__main__':
     account_list = account_db_manager.fetch_all()
     print(account_list)
 
-    save_data = {'phone': '15012340001', 'password': '444444', 'name': 'Jobs444444', 'token': ''} 
+    save_data = {'phone': '15012340003', 'password': '444444', 'name': 'Jobs444444', 'token': ''} 
     fetch_dic = {'phone': save_data['phone']}
     # print(fetch_dic)
-    exits_list = account_db_manager.fetch(**fetch_dic)   
-    if exits_list:
+    exist_list = account_db_manager.fetch(**fetch_dic)   
+    if exist_list:
         account_db_manager.update(**save_data)
     
+    account_list = account_db_manager.fetch_all()
+    print(account_list)
+
+    if account_db_manager.exist('15012340001'):
+        account_db_manager.delete(**{'phone': '15012340001'})
+
     account_list = account_db_manager.fetch_all()
     print(account_list)
