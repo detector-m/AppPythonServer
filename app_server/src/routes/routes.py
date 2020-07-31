@@ -13,7 +13,9 @@ from flask import Flask
 import sys
 sys.path.append('.')
 from app_server.src.api.account.api_account import api_account_module
-from app_server.src.api.api_constant import API_ROOT_PATH, API_ACCOUNT_ROOT_PATH
+from app_server.src.api.article.api_article import api_article_module
+
+from app_server.src.api.api_constant import API_ROOT_PATH, API_ACCOUNT_ROOT_PATH, API_ARTICLE_ROOT_PATH
 from app_server.src.error import error
 
 
@@ -28,6 +30,7 @@ def init_routes(app: Flask):
 
     @app.route(ROOT_PATH+API_ROOT_PATH)
     @app.route(ROOT_PATH+API_ACCOUNT_ROOT_PATH)
+    @app.route(ROOT_PATH+API_ARTICLE_ROOT_PATH)
     def api_index():
         return 'api'
 
@@ -38,6 +41,9 @@ def init_routes(app: Flask):
 
     # 登录注册api 蓝图注册
     app.register_blueprint(api_account_module, url_prefix=ROOT_PATH+API_ACCOUNT_ROOT_PATH)
+    
+    # 文章模块
+    app.register_blueprint(api_article_module, url_prefix=ROOT_PATH+API_ARTICLE_ROOT_PATH)
 
     # app.add_url_rule('/extract/', 'extract', extract)
     # app.add_url_rule('/allow/', 'allow', allow)

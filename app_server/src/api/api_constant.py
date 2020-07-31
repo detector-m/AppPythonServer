@@ -13,3 +13,6 @@ API_ROOT_PATH = 'api'
 
 # 账号模块根路径
 API_ACCOUNT_ROOT_PATH = API_ROOT_PATH + '/api_account'
+
+# 文章模块根路径
+API_ARTICLE_ROOT_PATH = API_ROOT_PATH + '/api_article'
