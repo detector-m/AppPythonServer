@@ -74,12 +74,12 @@ class AccountDataDB(AccountDataInterface):
     '''
     def insert(self, **kwargs) -> int:
         if not self.con:
-            return -1;
+            return -1
 
         if not kwargs:
-            return -1;
+            return -1
 
-        # fetch_dic = dict([(ACCOUNT_DB_TABLE_KEYS[0], kwargs[ACCOUNT_DB_TABLE_KEYS[0]])]);
+        # fetch_dic = dict([(ACCOUNT_DB_TABLE_KEYS[0], kwargs[ACCOUNT_DB_TABLE_KEYS[0]])])
         # fetch_dic = {ACCOUNT_DB_TABLE_KEYS[0]: kwargs[ACCOUNT_DB_TABLE_KEYS[0]]}
         # print(fetch_dic)
         # exits_list = self.fetch(**fetch_dic)
@@ -105,10 +105,10 @@ class AccountDataDB(AccountDataInterface):
     '''
     def update(self, **kwargs) -> int:
         if not self.con:
-            return -1;
+            return -1
 
         if not kwargs:
-            return -1;
+            return -1
 
         try:
             # sql_str = f"UPDATE {ACCOUNT_DB_TABLE_NAME} SET "
@@ -164,7 +164,7 @@ class AccountDataDB(AccountDataInterface):
     '''
     def delete(self, **kwargs):
         if not self.con:
-            return -1;
+            return -1
         
         if not kwargs:
             return -1
@@ -175,7 +175,6 @@ class AccountDataDB(AccountDataInterface):
         if key not in ACCOUNT_DB_TABLE_KEYS:
             return -1
         
-        account_list = []
         # sql_str = f"DELETE * FROM {ACCOUNT_DB_TABLE_NAME} WHERE {key}='{kwargs[key]}'"
         # self.cur.execute(sql_str)
 
@@ -192,7 +191,7 @@ class AccountDataDB(AccountDataInterface):
     '''   
     def exist(self, phone):
         if not self.con:
-            return False;
+            return False
 
         if not phone:
             return False
@@ -210,7 +209,7 @@ class AccountDataDB(AccountDataInterface):
     '''
     def fetch(self, **kwargs):
         if not self.con:
-            return None;
+            return None
 
         if not kwargs:
             account_list = []
@@ -264,7 +263,7 @@ if __name__ == '__main__':
     account_db_manager.connect()
 
     save_data = {'phone': '15012340000', 'password': '000000', 'name': 'Riven', 'token': ''}
-    # fetch_dic = dict([(ACCOUNT_DB_TABLE_KEYS[0], kwargs[ACCOUNT_DB_TABLE_KEYS[0]])]);
+    # fetch_dic = dict([(ACCOUNT_DB_TABLE_KEYS[0], kwargs[ACCOUNT_DB_TABLE_KEYS[0]])])
     fetch_dic = {'phone': save_data['phone']}
     # print(fetch_dic)
     exist_list = account_db_manager.fetch(**fetch_dic)
