@@ -191,6 +191,9 @@ class AccountDataDB(AccountDataInterface):
     根据电话号码判读是否存在
     '''   
     def exist(self, phone):
+        if not self.con:
+            return False;
+
         if not phone:
             return False
         
@@ -228,7 +231,12 @@ class AccountDataDB(AccountDataInterface):
             sql_str = f"SELECT * FROM {ACCOUNT_DB_TABLE_NAME} WHERE {key}='{kwargs[key]}'"
             self.cur.execute(sql_str)
             for item in self.cur:
-                account_list.append(item)
+                item_dict = {}
+                item_dict['id'] = item[0]
+                for i, vale in enumerate(item[1:]):
+                    item_dict[ACCOUNT_DB_TABLE_KEYS[i]] = vale
+                
+                account_list.append(item_dict)
 
             return account_list
 
@@ -237,7 +245,10 @@ class AccountDataDB(AccountDataInterface):
 
 
 class AccountManager(DataAdapter):
-    def __init__(self, data_interface: DataInterface, *, path=None):
+    def __init__(self, data_interface: DataInterface=None, *, path=None):
+        # if not data_interface:
+            # data_interface = AccountDataDB()
+
         # super().__init__(data_interface)
         DataAdapter.__init__(self, data_interface)
 

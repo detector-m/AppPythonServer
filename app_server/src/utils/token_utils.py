@@ -12,6 +12,10 @@ import time
 import base64
 import hmac
 
+import sys
+sys.path.append('.')
+from app_server.src.utils.string_utils import random_string
+
 def generate_token(key, expire=60*60*24):
     """
     @Args:
@@ -59,4 +63,8 @@ def verify_token(key, token):
         return False
 
     return True
+
+# 生成随机字符串
+def random_token(from_text=None,len=32):
+    return random_string(from_text, len)
 

@@ -8,6 +8,9 @@
 @版本        :1.0.0
 '''
 
+import random
+import string
+
 def replace(old_text, new_text, start, end):
     start_text = old_text[:start]
 
@@ -71,4 +74,11 @@ def values_to_string(value):
 
     return value
 
+# 生成随机字符串
+def random_string(from_text=None, len=32):
+    # return random.sample('zyxwvutsrqponmlkjihgfedcba',len)
+    if not from_text:
+        from_text = string.ascii_letters + string.digits
+
+    return ''.join(random.sample(from_text,len))
     
