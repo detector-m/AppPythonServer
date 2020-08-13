@@ -3,6 +3,7 @@
 '''
 @文件        :singleton.py
 @说明        : Python与设计模式--单例模式 ->
+https://zhuanlan.zhihu.com/p/31675841
 https://developer.aliyun.com/article/70418
 @时间        :2020/08/13 16:40:17
 @作者        :Riven
