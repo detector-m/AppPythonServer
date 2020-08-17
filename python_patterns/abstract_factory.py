@@ -10,7 +10,32 @@ https://www.cnblogs.com/onepiece-andy/p/python-abstract-factory-pattern.html
 @版本        :1.0.0
 '''
 
-__author__ = 'Riven'
+'''
+抽象工厂方法（Abstract Factory）
+定义一个工厂类接口，让工厂子类来创建一系列相关或相互依赖的对象。
+
+角色：
+抽象工厂角色（Creator）
+具体工厂角色（Concrete Creator）
+抽象产品角色（Product）
+具体产品角色（Concrete Product）
+客户端（Client）
+
+相比工厂方法模式，抽象工厂模式中的每个具体工厂都生产一套产品。
+
+适用场景：
+系统要独立于产品的创建与组合时
+强调一系列相关的产品对象的设计以便进行联合使用时
+提供一个产品类库，想隐藏产品的具体实现时
+
+优点：
+将客户端与类的具体实现相分离
+每个工厂创建了一个完整的产品系列，使得易于交换产品系列
+有利于产品的一致性（即产品之间的约束关系）
+
+缺点：
+难以支持新种类的（抽象）产品
+'''
 
 import abc
 
