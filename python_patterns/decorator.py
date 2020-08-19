@@ -74,3 +74,28 @@ if __name__ == '__main__':
     ts.decorate(p)
     tr.decorate(ts)
     tr.show()
+
+# # 方式二
+# class Foo:
+#     def f1(self):
+#         print('f1')
+
+#     def f2(self):
+#         print('f2')
+
+# class Decorator:
+#     def __init__(self, decoratee):
+#         self._decoratee = decoratee
+
+#     def f1(self):
+#         print('decorated f1')
+#         self._decoratee.f1()
+
+#     def __getattr__(self, name):
+#         return getattr(self._decoratee, name)
+
+# if __name__ == '__main__':
+#     foo = Foo()
+#     decorator = Decorator(foo)
+#     decorator.f1()
+#     decorator.f2()
